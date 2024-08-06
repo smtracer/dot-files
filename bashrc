@@ -1,0 +1,182 @@
+# -*- sh -*-
+
+is_os() { [ "$(uname -s | tr '[:upper:]' '[:lower:]')" = "$1" ] ; }
+is_macos() { is_os "darwin" ; }
+is_linux() { is_os "linux" ; }
+
+if is_macos; then
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+fi
+
+shopt -s histappend
+export HISTSIZE=50000
+alias g="grep -isE"
+alias l="ls -lA --color=always"
+alias r='source $HOME/.bashrc'
+
+# Package Management -----------------------------------------------------------
+
+init_homebrew() {
+    if is_macos; then
+	brew_prefix="/opt/homebrew"
+    elif is_linux; then
+	brew_prefix="/home/linuxbrew/.linuxbrew"
+    else
+	return 1
+    fi
+
+    if [ -x "$brew_prefix/bin/brew" ]; then
+	eval "$("$brew_prefix"/bin/brew shellenv)"
+    fi
+}
+init_homebrew
+
+# Editor -----------------------------------------------------------------------
+
+if command -v emacs &>/dev/null; then
+    export EDITOR="emacsclient -nw" && export VISUAL="emacsclient -nw"
+elif command -v vim &>/dev/null; then
+    export EDITOR="vim" && export VISUAL="vim"
+fi
+
+alias e='$EDITOR'
+
+# Git --------------------------------------------------------------------------
+
+alias ga="git add"
+alias gb="git branch"
+alias gc="git commit"
+alias gcm="git commit -m"
+alias gca="git commit --amend"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gl="git log" # TODO: fuzzy git log?
+alias gs="git status"
+
+# Tmux -------------------------------------------------------------------------
+
+alias tma="tmux attach -t"
+alias tmk="tmux kill-session -t"
+alias tml="tmux list-sessions"
+alias tmn="tmux new-session -As"
+
+# Transient Environment --------------------------------------------------------
+# Support for persistent, on-the-fly modifications to the shell environment.
+
+TRANSIENT_ENVIRONMENT="${TRANSIENT_ENVIRONMENT:=$HOME/.bash_transient}"
+if [ ! -f "$TRANSIENT_ENVIRONMENT" ]; then
+    touch "$TRANSIENT_ENVIRONMENT"
+fi
+. "$TRANSIENT_ENVIRONMENT"
+
+# Create an alias in the transient environment.
+# (transient-environment-create)
+#
+# $1: Name of the alias
+# $2: Value of the alias
+tec() {
+    if [ -z "$1" ] || [ -z "$2" ]; then
+	echo "usage: tec <alias name> <alias value>"
+	return 1
+    fi
+
+    echo "alias $1=\"$2\"" >> "$TRANSIENT_ENVIRONMENT"
+    . "$TRANSIENT_ENVIRONMENT"
+}
+
+# Create a transient alias to `cd` into $pwd
+# (transient-environment-directory)
+#
+# $1: Name of the alias
+ted() {
+    if [ -z "$1" ]; then
+	echo "usage: ted <alias name>"
+	return 1
+    fi
+
+    tec "$1" "cd $(pwd)"
+    . "$TRANSIENT_ENVIRONMENT"
+}
+
+# Edit transient environment configuration
+tee() {
+    e "$TRANSIENT_ENVIRONMENT"
+}
+
+# List transient environment configuration
+tel() {
+    cat "$TRANSIENT_ENVIRONMENT"
+}
+
+# Prompt -----------------------------------------------------------------------
+
+# Expects $1 to be a color var & $2 to be a font-style var (see below)
+print_style() { printf "\[\e[%s;3%sm\]" "${2:-0}" "$1" ; }
+reset_style() { printf "\[\e[0;0;0m\]" ; }
+is_nerd_font() { fc-list : family | grep -iE --quiet ".*nerd-font.*|.*nerd_font.*|.*nerd font.*" ; }
+
+BLACK=0
+RED=1
+GREEN=2
+YELLOW=3
+BLUE=4
+
+BOLD=1
+FAINT=2
+ITALIC=3
+UNDERLINE=4
+
+FILE_ICON="!"
+GIT_ICON="@"
+TIME_ICON="ts"
+if is_nerd_font; then
+    FILE_ICON=""
+    GIT_ICON=""
+    TIME_ICON="󰔛"
+fi
+
+_prompt_previous_exit_section() {
+    prevexit=$?
+    if [ $prevexit -eq 0 ]; then
+	return
+    fi
+
+    echo "$(print_style $RED $BOLD)[$prevexit]$(reset_style) "
+}
+
+_prompt_timestamp() {
+    utc_ts="$(date -u +"%s")"
+    echo "$(print_style $BLACK)[utc $(print_style $BLUE)$TIME_ICON $utc_ts$(print_style $BLACK)] "
+}
+
+_prompt_git_section() {
+
+    if ! git branch &>/dev/null; then
+	return
+    fi
+    display_color=$GREEN
+    if ! git diff --exit-code &>/dev/null; then
+	display_color=$YELLOW
+	changed_file_display=" ($(git status -s -uno | wc -l | xargs) $FILE_ICON)"
+    fi
+    branch=$(git branch 2>/dev/null | sed '/^[^*]/d' | sed -r 's/[* ]+//g')
+    echo "$(print_style $display_color)$GIT_ICON $branch$changed_file_display$(reset_style) "
+}
+
+_prompt() {
+    PS1=$(_prompt_previous_exit_section)
+    PS1+=$(_prompt_timestamp)
+    PS1+=$(_prompt_git_section)
+    PS1+="$(print_style $BLUE)\w$(print_style $GREEN) $ $(reset_style)"
+}
+PROMPT_COMMAND=_prompt
+
+# Local Configuration ----------------------------------------------------------
+# Consider everything in $HOME/.config/bash as additional shell configuration.
+# Source these last so that any conflicting local configuration takes precedence.
+
+for local_config in "$HOME/.config/bash/"*; do
+    if [ -f "$local_config" ]; then
+	. "$local_config"
+    fi
+done

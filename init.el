@@ -116,13 +116,7 @@ Use in `isearch-mode-end-hook'."
   :bind
   (:map ctl-j-map
 	("o a" . org-agenda)
-	("o c" . org-capture)
-	;; Break with the 'o-*' keybind pattern to mirror the default
-	;; 'org-clock-*' function keybinds in 'org-mode', replacing
-	;; prefix 'C-c' with 'C-j' for global access.
-	("C-x C-j" . org-clock-goto)
-	("C-x C-i" . org-clock-in)
-	("C-x C-o" . org-clock-out)))
+	("o c" . org-capture)))
 
 ;; -----------------------------------------------------------------------------
 ;; Additional Packages
