@@ -1,4 +1,4 @@
-;;; core-text-editing.el --- ...
+;;; init-text-editing.el --- ...
 ;;; Commentary:
 ;;; Code:
 
@@ -32,9 +32,7 @@
         ("c l" . 'avy-copy-line)
         ("c r" . 'avy-copy-region)
         ("k l" . 'avy-kill-whole-line)
-        ("k r" . 'avy-kill-region))
-  :config
-  (define-key isearch-mode-map (kbd "C-j") 'avy-isearch))
+        ("k r" . 'avy-kill-region)))
 
 ;; Like vim 'ci'/'ca'
 (use-package change-inner
@@ -54,5 +52,5 @@
   :init
   (global-whitespace-cleanup-mode 1))
 
-(provide 'core-text-editing)
-;;; core-text-editing.el ends here
+(provide 'init-text-editing)
+;;; init-text-editing.el ends here

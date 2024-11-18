@@ -12,6 +12,7 @@
 ;;; Code:
 
 (deftheme nordic-vein "A medium-contrast holographic theme.")
+(defface ext/my-face '((default . (:inherit default))) "")
 (let* ((class '((class color) (min-colors 89)))
 
       ;;; = Palette =
@@ -19,7 +20,10 @@
        ;; == Text ==
 
        ;; (bg                     "#24283b")
-       (bg "#2E3440")
+       ;; (bg "#2E3440")
+       (bg "#2e3440")
+       ;; (bg "#2b303b")
+       ;; (bg "#2a303b")
        ;; (bg "#2b303b")
        ;; (dark-bg "#1c2030")
        ;; (dark-bg "#1a1e2d")
@@ -30,7 +34,8 @@
        (active-bg-2              "#292e42")
        (active-bg-hl           "#414868")
 
-       (fg                     "#a9b1d6")
+       ;; (fg                     "#a9b1d6")
+       (fg "#c8cee4")
        (active-fg              "#c0caf5")
        ;; (muted-fg "#606680")
        (muted-fg               "#6f779b")     ; inactive, but visible
@@ -348,21 +353,25 @@
    ;;; = Syntax Highlighting =
 
    `(font-lock-builtin-face ((,class (:foreground ,glitch-blue-fg))))
-   `(font-lock-comment-face ((,class (:foreground ,muted-fg :slant italic))))
-   `(font-lock-constant-face ((,class (:foreground ,safe))))
+   `(font-lock-comment-face ((,class (:foreground "#5c6184" :slant italic))))
+   `(ext/my-face ((,class (:foreground "#7b7fa3" :slant italic))))
+   ;; `(font-lock-constant-face ((,class (:foreground ,safe))))
+   `(font-lock-constant-face ((,class (:inherit ext/my-face))))   
    `(font-lock-doc-face ((,class (:inherit font-lock-comment-face))))
-   `(font-lock-function-name-face ((,class (:foreground ,special))))
-   `(font-lock-function-call-face ((,class (:inherit font-lock-function-name-face :weight bold))))
-   `(font-lock-keyword-face ((,class (:foreground ,glitch-magenta-fg))))
+   `(font-lock-function-name-face ((,class (:foreground ,glitch-cyan-fg))))
+   `(font-lock-function-call-face ((,class (:inherit font-lock-function-name-face))))
+   ;; `(font-lock-keyword-face ((,class (:foreground ,glitch-magenta-fg))))
+   `(font-lock-keyword-face ((,class (:inherit ext/my-face))))   
    `(font-lock-negation-char-face ((,class (:foreground ,glitch-red-fg))))
    `(font-lock-number-face ((,class (:foreground ,safe))))
    `(font-lock-operator-face ((,class (:inherit font-lock-function-call-face))))
    `(font-lock-property-name-face ((,class (:foreground ,glitch-cyan-fg))))
    `(font-lock-property-use-face ((,class (:foreground ,glitch-cyan-fg))))
-   `(font-lock-string-face ((,class (:foreground ,safe))))
-   `(font-lock-type-face ((,class (:foreground ,types))))
-   `(font-lock-variable-name-face ((,class (:foreground ,glitch-cyan-fg))))
-   `(font-lock-variable-use-face ((,class (:foreground ,glitch-cyan-fg))))
+   ;; `(font-lock-string-face ((,class (:foreground ,safe))))
+   `(font-lock-string-face ((,class (:foreground ,safe))))   
+   `(font-lock-type-face ((,class (:foreground ,safe))))
+   `(font-lock-variable-name-face ((,class (:foreground ,glitch-blue-fg))))
+   `(font-lock-variable-use-face ((,class (:inherit font-lock-variable-name-face))))
    `(font-lock-warning-face ((,class (:inherit warning))))
 
    ;;; = External Packages =
@@ -417,6 +426,9 @@
    `(powerline-inactive1 ((,class (:inherit mode-line))))
    `(powerline-inactive2 ((,class (:inherit mode-line))))
 
+   ;; compilation
+   `(next-error-message ((,class (:background ,error-bg :foreground ,error-fg))))
+   
    ;; == company ==
 
    `(company-echo ((,class (:inherit default))))

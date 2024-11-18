@@ -2,8 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Disable 'package.el', Emacs' default packaging system.
-(setq package-enable-at-startup nil)
+(setenv "LSP_USE_PLISTS" "true")
+(setq inhibit-splash-screen t
+      package-enable-at-startup nil) ; Disable 'package.el', Emacs' default
+                                     ; packaging system.
 
 (provide 'early-init)
 ;;; early-init.el ends here

@@ -1,4 +1,4 @@
-;;; init-custom-keymaps.el --- Provide configurable keymap(s).
+;;; init-user-overlay.el ---
 ;;; Commentary:
 ;;; Code:
 
@@ -13,5 +13,7 @@
 (defvar ctl-j-map (make-sparse-keymap))
 (define-key user-overlay-mode-map (kbd "C-j") ctl-j-map)
 
-(provide 'init-custom-keymaps)
-;;; init-custom-keymaps.el ends here
+(define-key ctl-j-map (kbd "R") 'rename-visited-file)
+
+(provide 'init-user-overlay)
+;;; init-user-overlay.el ends here

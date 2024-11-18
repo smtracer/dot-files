@@ -1,13 +1,9 @@
-;;; init-packaging.el --- Initialize elisp package management.
+;;; bootstrap-packaging.el --- Initialize elisp package management.
 ;;; Commentary:
 ;;; Code:
 
-;; Disable 'package.el', Emacs' default packaging system.
-;; If possible, this should be done in 'early-init.el' to prevent, rather than
-;; disable, loading of packages.
-;; (setq package-enable-at-startup nil)
-
-;; Install 'straight.el', an alternative git-based packaging system.
+;; Install 'straight.el', an alternative package manager. Packages are installed
+;; as git repos that can be modified to test changes locally.
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -30,5 +26,5 @@
 ;; Remove the need to specify :straight in 'use-package' blocks.
 (setq straight-use-package-by-default 't)
 
-(provide 'init-packaging)
-;;; init-packaging.el ends here
+(provide 'bootstrap-packaging)
+;;; bootstrap-packaging.el ends here

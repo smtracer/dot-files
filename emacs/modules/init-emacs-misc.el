@@ -1,4 +1,4 @@
-;;; core-emacs.el --- Configure Emacs builtins
+;;; init-emacs-misc.el --- Configure Emacs builtins
 ;;; Commentary:
 ;;; Code:
 
@@ -8,12 +8,18 @@
       delete-old-versions t
       fill-column 80)
 
-(winner-mode t)
-
 (define-key ctl-j-map (kbd "C-f") 'scroll-other-window)
 (define-key ctl-j-map (kbd "C-v") 'scroll-other-window-down)
 (define-key ctl-j-map (kbd "C-p") 'winner-undo)
 (define-key ctl-j-map (kbd "C-n") 'winner-redo)
 
-(provide 'core-emacs)
-;;; core-emacs.el ends here
+(winner-mode t)
+
+(use-package dired
+  :straight (:type built-in)
+  :bind
+  (:map dired-mode-map
+        ("p" . dired-up-directory)))
+
+(provide 'init-emacs-misc)
+;;; init-emacs-misc.el ends here
