@@ -10,7 +10,6 @@ fi
 
 shopt -s histappend
 export HISTSIZE=50000
-alias g="grep -isE"
 alias l="ls -lA --color=always"
 alias r='source $HOME/.bashrc'
 
@@ -50,7 +49,7 @@ alias gcm="git commit -m"
 alias gca="git commit --amend"
 alias gd="git diff"
 alias gdc="git diff --cached"
-alias gl="git log" # TODO: fuzzy git log?
+alias gl="git log"
 alias gs="git status"
 
 # Tmux -------------------------------------------------------------------------
@@ -122,9 +121,6 @@ YELLOW=3
 BLUE=4
 
 BOLD=1
-FAINT=2
-ITALIC=3
-UNDERLINE=4
 
 FILE_ICON="!"
 GIT_ICON="@"
@@ -157,10 +153,9 @@ _prompt_git_section() {
     display_color=$GREEN
     if ! git diff --exit-code &>/dev/null; then
 	display_color=$YELLOW
-	changed_file_display=" ($(git status -s -uno | wc -l | xargs) $FILE_ICON)"
     fi
     branch=$(git branch 2>/dev/null | sed '/^[^*]/d' | sed -r 's/[* ]+//g')
-    echo "$(print_style $display_color)$GIT_ICON $branch$changed_file_display$(reset_style) "
+    echo "$(print_style $display_color)$GIT_ICON $branch$(reset_style) "
 }
 
 _prompt() {
@@ -175,6 +170,7 @@ PROMPT_COMMAND=_prompt
 # Consider everything in $HOME/.config/bash as additional shell configuration.
 # Source these last so that any conflicting local configuration takes precedence.
 
+export PATH="$HOME/.config/bin:$PATH"
 for local_config in "$HOME/.config/bash/"*; do
     if [ -f "$local_config" ]; then
 	. "$local_config"

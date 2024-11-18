@@ -35,6 +35,8 @@
 (add-to-list 'auto-mode-alist '("\\.sh\\'" . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.bashrc\\'" . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.bash_profile\\'" . bash-ts-mode))
+(add-to-list 'auto-mode-alist '("bashrc" . bash-ts-mode))
+(add-to-list 'auto-mode-alist '("bash_profile" . bash-ts-mode))
 
 ;; = LANGUAGE SERVER PROTOCOL =
 

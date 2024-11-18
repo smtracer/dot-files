@@ -27,6 +27,15 @@
 
 (use-package flymake
   :straight (:type built-in)
+  :config
+  ;; Open flymake buffers below the current window
+  (add-to-list 'display-buffer-alist
+             `("*Flymake"
+              (display-buffer-reuse-window
+               display-buffer-in-side-window)
+              (side            . bottom)
+              (reusable-frames . visible)
+              (window-height   . 0.33)))
   :bind
   (:map ctl-j-map
         ("e n" . flymake-goto-next-error)
