@@ -1,4 +1,8 @@
-# -*- sh -*-
+# TODO: Move configuration for interactive sessions into .bash_profile
+export USEREXT_DEV_ROOT=${_USEREXT_DEV_ROOT:-$HOME/dev}
+cdev() {
+    cd "$USEREXT_DEV_ROOT" "$@" || return 1
+}
 
 is_os() { [ "$(uname -s | tr '[:upper:]' '[:lower:]')" = "$1" ] ; }
 is_macos() { is_os "darwin" ; }
@@ -12,6 +16,8 @@ shopt -s histappend
 export HISTSIZE=50000
 alias l="ls -lA --color=always"
 alias r='source $HOME/.bashrc'
+export TERM=xterm-256color
+export COLORTERM="truecolor"
 
 # Package Management -----------------------------------------------------------
 
