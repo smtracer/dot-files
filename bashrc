@@ -146,11 +146,6 @@ _prompt_previous_exit_section() {
     echo "$(print_style $RED $BOLD)[$prevexit]$(reset_style) "
 }
 
-_prompt_timestamp() {
-    utc_ts="$(date -u +"%s")"
-    echo "$(print_style $BLACK)[utc $(print_style $BLUE)$TIME_ICON $utc_ts$(print_style $BLACK)] "
-}
-
 _prompt_git_section() {
 
     if ! git branch &>/dev/null; then
@@ -166,11 +161,17 @@ _prompt_git_section() {
 
 _prompt() {
     PS1=$(_prompt_previous_exit_section)
-    PS1+=$(_prompt_timestamp)
     PS1+=$(_prompt_git_section)
     PS1+="$(print_style $BLUE)\w$(print_style $GREEN) $ $(reset_style)"
 }
 PROMPT_COMMAND=_prompt
+
+# = Rust 
+CARGO_DIR="$HOME/.cargo"
+CARGO_BIN="$CARGO_DIR/bin"
+if [ -d "$CARGO_BIN" ]; then
+    PATH=$PATH:"$CARGO_BIN"
+fi
 
 # Local Configuration ----------------------------------------------------------
 # Consider everything in $HOME/.config/bash as additional shell configuration.
