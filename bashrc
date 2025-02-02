@@ -162,7 +162,7 @@ _prompt_git_section() {
 _prompt() {
     PS1=$(_prompt_previous_exit_section)
     PS1+=$(_prompt_git_section)
-    PS1+="$(print_style $BLUE)\w$(print_style $GREEN) $ $(reset_style)"
+    PS1+="$(print_style $BLACK)\w$(print_style $GREEN) $ $(reset_style)"
 }
 PROMPT_COMMAND=_prompt
 

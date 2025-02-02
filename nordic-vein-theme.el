@@ -153,7 +153,7 @@
    ;;; Basic Faces
 
    `(bold                          ((,class (:weight bold))))
-   `(bold-italic                   ((,class (:weight bold :slant italic))))
+   `(bold-italic                   ((,class (:weight bold))))
    `(border                        ((,class (:foreground ,dark-bg))))
    `(button                        ((,class (:foreground ,glitch-blue-fg :weight bold))))
    `(child-frame-border            ((,class (:inherit border))))
@@ -173,7 +173,7 @@
    `(internal-border               ((,class (:inherit border))))
    `(isearch                       ((,class (:background ,info-fg :foreground ,info-bg))))
    `(isearch-fail                  ((,class (:background ,error-fg :foreground ,error-bg))))
-   `(italic                        ((,class (:slant italic))))
+   `(italic                        ((,class (:inherit default))))
    `(lazy-highlight                ((,class (:background ,info-bg :foreground ,info-fg))))
    `(line-number                   ((,class (:foreground ,inactive-fg))))
    `(line-number-current-line      ((,class (:inherit highlight))))
@@ -353,8 +353,8 @@
    ;;; = Syntax Highlighting =
 
    `(font-lock-builtin-face ((,class (:foreground ,glitch-blue-fg))))
-   `(font-lock-comment-face ((,class (:foreground "#5c6184" :slant italic))))
-   `(ext/my-face ((,class (:foreground "#7b7fa3" :slant italic))))
+   `(font-lock-comment-face ((,class (:foreground "#5c6184"))))
+   `(ext/my-face ((,class (:foreground "#7b7fa3"))))
    ;; `(font-lock-constant-face ((,class (:foreground ,safe))))
    `(font-lock-constant-face ((,class (:inherit ext/my-face))))   
    `(font-lock-doc-face ((,class (:inherit font-lock-comment-face))))

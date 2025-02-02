@@ -19,6 +19,7 @@
   :straight (:type built-in)
   :bind
   (:map dired-mode-map
+        (";" . shell-command)
         ("p" . dired-up-directory)))
 
 (provide 'init-emacs-misc)

@@ -57,6 +57,7 @@
         read-process-output-max (* 1024 1024)
         lsp-lens-auto-enable nil
         lsp-auto-execute-action nil
+        lsp-signature-render-documentation nil
         lsp-modeline-code-actions-enable t
         ;; Nerd fonts for terminal dwellers
         lsp-modeline-code-action-fallback-icon ""
@@ -66,9 +67,10 @@
   :commands lsp-ui-mode
   :config
   (setq lsp-ui-sideline-show-code-actions nil
-        lsp-ui-sideline-show-symbol t
         lsp-ui-sideline-show-hover t
-        lsp-ui-sideline-show-diagnostics t)
+        lsp-ui-sideline-delay 1
+        lsp-ui-sideline-show-symbol nil
+        lsp-ui-sideline-show-diagnostics nil)
   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))
 
