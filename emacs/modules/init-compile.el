@@ -5,8 +5,7 @@
 (use-package compile
   :straight (:type built-in)
   :config
-  (setq compilation-scroll-output 'first-error
-        compilation-auto-jump-to-first-error 'first-known
+  (setq compilation-scroll-output t
         compilation-always-kill t
         compilation-ask-about-save nil
         compilation-buffer-name-function 'ext/project-or-buffer-compilation-buffer-name

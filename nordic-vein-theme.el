@@ -166,7 +166,7 @@
    `(fixed-pitch-serif             ((,class (:family "monospace serif"))))
    `(fringe                        ((,class (:background ,bg))))
    `(glyphless-char                ((,class (:foreground ,special))))
-   `(header-line                   ((,class (:inherit mode-line :background ,bg :foreground "#a9b1d6"))))
+   `(header-line                   ((,class (:inherit mode-line :background "#272b35" :foreground "#a9b1d6"))))
    `(header-line-highlight         ((,class (:inherit mode-line-active))))
    `(highlight                     ((,class (:background ,active-bg :foreground ,active-fg))))
    `(homoglyph                     ((,class (:foreground ,special))))

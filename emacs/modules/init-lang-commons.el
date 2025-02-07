@@ -109,9 +109,26 @@
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
         magit-save-repository-buffers 'dontask)
+  (unbind-key "SPC" magit-diff-mode-map)
   :bind
+  (:map magit-diff-mode-map
+        ("SPC Z" . (lambda() (interactive)(magit-mode-bury-buffer)(magit-stash-both)))
+        ("SPC s" . (lambda() (interactive)(magit-mode-bury-buffer)(magit-stash-worktree)))
+        ("SPC u" . (lambda() (interactive)(magit-mode-bury-buffer)(magit-stash-index)))
+        ("SPC C" . (lambda() (interactive)(magit-mode-bury-buffer)(magit-commit-create)))
+        ("SPC F" . (lambda() (interactive)(magit-mode-bury-buffer)(magit-commit-instant-fixup))))
   (:map ctl-j-map
-        ("g c" . magit-branch-create)))
+        ("g B" . magit-branch-checkout)
+        ("g b" . magit-branch)
+        ("g z" . magit-stash)
+        ("g Z" . magit-stash-both)
+        ("g u" . magit-diff-unstaged)
+        ("g s" . magit-diff-staged)
+        ("g C" . magit-commit-create)
+        ("g c" . magit-commit)
+        ("g F" . magit-commit-instant-fixup)
+        ("g L" . magit-log-current)
+        ("g l" . magit-log)))
 
 (use-package treesit
   :straight (:type built-in)
