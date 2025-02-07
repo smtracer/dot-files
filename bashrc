@@ -56,7 +56,13 @@ alias gca="git commit --amend"
 alias gd="git diff"
 alias gdc="git diff --cached"
 alias gl="git log"
-alias gs="git status"
+gs() {
+    if pgrep -falq "emacs --daemon"; then
+        emacsclient -nw --eval "(progn (magit-status))"
+    else
+        git status
+    fi
+}
 
 # Tmux -------------------------------------------------------------------------
 
