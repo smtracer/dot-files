@@ -53,17 +53,31 @@
 
 ;; = BUILD TARGETS =
 
+(defun ext/rust-compile-cargo-check()
+  (let* ((default-directory (project-root (project-current t))))
+    (compile "cargo check")))
+
+(defun ext/rust-compile-cargo-test()
+  (let* ((default-directory (project-root (project-current t))))
+    (compile "cargo test")))
+
+(defun ext/rust-compile-cargo-build()
+  (let* ((default-directory (project-root (project-current t))))
+    (compile "cargo build")))
+
+(defun ext/rust-compile-cargo-build-release()
+  (let* ((default-directory (project-root (project-current t))))
+    (compile "cargo build --release")))
+
 (use-package compile-multi
   :config
   (add-to-list 'compile-multi-config '(rust-ts-mode
-                                       ("rust:check" . "cargo check")
-                                       ("rust:build" . "cargo build")
-                                       ("rust:release" . "cargo build --release")
-                                       ("rust:run" . "cargo run")
-                                       ("rust:test" . "cargo test"))))
+                                       ("cargo:check" . ext/rust-compile-cargo-check)
+                                       ("cargo:build" . ext/rust-compile-cargo-build)
+                                       ("cargo:release" . ext/rust-compile-cargo-build-release)
+                                       ("cargo:test" . ext/rust-compile-cargo-test))))
 
 ;; (require 'compile)
-
 ;;; Copied from `rust-mode`
 (defvar rustc-compilation-location
   (let ((file "\\([^\n]+\\)")

@@ -10,11 +10,13 @@
         compilation-always-kill t
         compilation-ask-about-save nil
         compilation-buffer-name-function 'ext/project-or-buffer-compilation-buffer-name
-        compilation-context-lines t
+        compilation-context-lines nil
         next-error-message-highlight t)
   :bind
   (:map ctl-j-map
-        ("C-c" . recompile)))
+        ("C-c" . recompile)
+        ("h" . previous-error)
+        ("l" . next-error)))
 
 (use-package compile-multi
   :bind
