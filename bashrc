@@ -16,7 +16,7 @@ shopt -s histappend
 export HISTSIZE=50000
 alias l="ls -lA --color=always"
 alias r='source $HOME/.bashrc'
-export TERM=xterm-256color
+# export TERM=xterm-256color
 export COLORTERM="truecolor"
 
 # Package Management -----------------------------------------------------------
@@ -143,7 +143,7 @@ _prompt_previous_exit_section() {
 	return
     fi
 
-    echo "$(print_style $RED $BOLD)[$prevexit]$(reset_style) "
+    echo "$(print_style $RED $BOLD) [$prevexit]$(reset_style) "
 }
 
 _prompt_git_section() {
@@ -162,7 +162,7 @@ _prompt_git_section() {
 _prompt() {
     PS1=$(_prompt_previous_exit_section)
     PS1+=$(_prompt_git_section)
-    PS1+="$(print_style $BLACK)\w$(print_style $GREEN) $ $(reset_style)"
+    PS1+="$(print_style $BLACK) \w$(print_style $GREEN) $ $(reset_style)"
 }
 PROMPT_COMMAND=_prompt
 
