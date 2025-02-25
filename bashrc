@@ -57,11 +57,11 @@ alias gd="git diff"
 alias gdc="git diff --cached"
 alias gl="git log"
 gs() {
-    if pgrep -falq "emacs --daemon"; then
-        emacsclient -nw --eval "(progn (magit-status))"
-    else
-        git status
-    fi
+    # if pgrep -falq "emacs --daemon"; then
+    #     emacsclient -nw --eval "(progn (magit-status))"
+    # else
+    git status
+    # fi
 }
 
 # Tmux -------------------------------------------------------------------------
@@ -179,9 +179,23 @@ if [ -d "$CARGO_BIN" ]; then
     PATH=$PATH:"$CARGO_BIN"
 fi
 
+# Misc
+
+# "tail-head"
+th() {
+    if [ -z "$1" ]; then
+        echo "Tail the newest file in a directory."
+        echo "usage: th <directory> <tail_args>.."
+        return 1
+    fi
+    local directory="$1"
+    local rest="${@:2}" # FIXME: Check SC2124 warning
+    tail $rest $directory/$(ls -1t $directory | head -1)
+}
+
 # Local Configuration ----------------------------------------------------------
 # Consider everything in $HOME/.config/bash as additional shell configuration.
-# Source these last so that any conflicting local configuration takes precedence.
+# Source these last so that local configuration takes precedence.
 
 export PATH="$HOME/.config/bin:$PATH"
 for local_config in "$HOME/.config/bash/"*; do

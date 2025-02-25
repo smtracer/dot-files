@@ -2,6 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<integer>65</integer>
+			<key>applyMode</key>
+			<integer>0</integer>
+			<key>escaping</key>
+			<integer>2</integer>
+			<key>parameter</key>
+			<string>resize-pane -Z</string>
+			<key>title</key>
+			<string>[tmux] toggle zoom</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
 	<key>AllowClipboardAccess</key>
 	<true/>
 	<key>AppleAntiAliasingThreshold</key>
@@ -2327,13 +2344,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.25098040699958801</real>
+				<real>0.25098039215686274</real>
 				<key>Color Space</key>
-				<string>sRGB</string>
+				<string>P3</string>
 				<key>Green Component</key>
-				<real>0.20392157137393951</real>
+				<real>0.20392156862745098</real>
 				<key>Red Component</key>
-				<real>0.18039216101169586</real>
+				<real>0.1803921568627451</real>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
