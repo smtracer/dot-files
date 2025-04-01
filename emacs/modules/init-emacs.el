@@ -1,4 +1,4 @@
-;;; init-emacs-misc.el --- Configure Emacs builtins
+;;; init-emacs.el --- Configure Emacs builtins
 ;;; Commentary:
 ;;; Code:
 
@@ -10,17 +10,23 @@
 
 (define-key ctl-j-map (kbd "C-f") 'scroll-other-window)
 (define-key ctl-j-map (kbd "C-v") 'scroll-other-window-down)
-(define-key ctl-j-map (kbd "C-p") 'winner-undo)
-(define-key ctl-j-map (kbd "C-n") 'winner-redo)
 
-(winner-mode t)
+(use-package winner
+  :straight
+  (:type built-in)
+  :init
+  (winner-mode t)
+  :bind
+  (:map ctl-j-map
+        ("C-p" . winner-undo)
+        ("C-n" . winner-redo)))
 
 (use-package dired
-  :straight (:type built-in)
+  :straight
+  (:type built-in)
   :bind
   (:map dired-mode-map
-        (";" . shell-command)
         ("p" . dired-up-directory)))
 
-(provide 'init-emacs-misc)
-;;; init-emacs-misc.el ends here
+(provide 'init-emacs)
+;;; init-emacs.el ends here

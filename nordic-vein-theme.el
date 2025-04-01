@@ -1,29 +1,21 @@
-;;; nordic-vein-theme.el --- A medium-contrast holographic theme.
-;; Version: 0.0.1
-
+;;; nordic-vein-theme.el ---
 ;;; Commentary:
-;; Things that need to be done before considering a v1 release
-;; - TODO: fix glitch-$color-[bg|bg-hl|fg|fg-hl] pairings
-;; - TODO: with-eval-after-load external packages?
-;; - TODO: make primary & secondary selection configurable by ansi color
-;; - TODO: figure out the correct minver (probably 27.1)
-;; - TODO: thorough scan through available groups to cover all faces
-
 ;;; Code:
 
-(deftheme nordic-vein "A medium-contrast holographic theme.")
-(defface ext/my-face '((default . (:inherit default))) "")
+(deftheme nordic-vein "TBD.")
+
 (let* ((class '((class color) (min-colors 89)))
 
-      ;;; = Palette =
+       ;;; = Palette =
 
        ;; == Text ==
 
        ;; (bg                     "#24283b")
-       ;; (bg "#2E3440")
-       (bg "#2e3440")
+       (bg "#2E3440")
+       ;; (bg "#242933")
+       ;; (bg "#2e3440")
        ;; (bg "#2b303b")
-       ;; (bg "#2a303b")
+              ;; (bg "#2a303b")
        ;; (bg "#2b303b")
        ;; (dark-bg "#1c2030")
        ;; (dark-bg "#1a1e2d")
@@ -39,32 +31,36 @@
        (active-fg              "#c0caf5")
        ;; (muted-fg "#606680")
        (muted-fg               "#6f779b")     ; inactive, but visible
-       (inactive-fg            "#3d465c")     ; inactive, nearly hidden
+       (inactive-fg            "#333a4d")     ; inactive, nearly hidden
 
        ;; == Colors ==
 
        (glitch-black-bg        "#313750")
        (glitch-black-bg-hl     "#1f2335")
-       (glitch-black-fg        "#1f2335")
+       ;; (glitch-black-fg        "#1f2335")
+       (glitch-black-fg        "#191D24")
        (glitch-black-fg-hl     "#565f89")
 
        ;; Functions, builtins
        (glitch-blue-bg         "#192a4d")
        (glitch-blue-bg-hl      "#7aa2f7")
-       (glitch-blue-fg         "#7aa2f7")
+       ;; (glitch-blue-fg         "#7aa2f7")
+       (glitch-blue-fg "#5E81AC")
        (glitch-blue-fg-hl      "#031130")
 
        ;; Variables, object properties
        (glitch-cyan-bg         "#274440")
        (glitch-cyan-bg-hl      "#73daca")
-       (glitch-cyan-fg         "#73daca")
+       ;; (glitch-cyan-fg         "#73daca")
+       (glitch-cyan-fg         "#8FBCBB")
        (glitch-cyan-fg-hl      "#222a29")
        (nord-cyan "#8FBCBB")
 
        ;; Info/Success
        (glitch-green-bg        "#273644")
        (glitch-green-bg-hl     "#4c9e8a")
-       (glitch-green-fg        "#4c9e8a")
+       ;; (glitch-green-fg        "#4c9e8a")
+       (glitch-green-fg        "#A3BE8C")
        (glitch-green-fg-hl     "#11221e")
 
        ;; Keywords
@@ -72,18 +68,21 @@
        (glitch-magenta-bg-hl   "#bb9af7")
        ;; (glitch-magenta-fg      "#bb9af7")
        ;; (glitch-magenta-fg "#db6582")
-       (glitch-magenta-fg "#eb6f92")
+       ;; (glitch-magenta-fg "#eb6f92")
+       (glitch-magenta-fg "#B48EAD")
        (glitch-magenta-fg-hl   "#171320")
 
        ;; Errors
        (glitch-red-bg          "#342c3c")
        (glitch-red-bg-hl       "#f7768e")
-       (glitch-red-fg          "#f7768e")
+       ;; (glitch-red-fg          "#f7768e")
+       (glitch-red-fg          "#BF616A")
        (glitch-red-fg-hl       "#30030b")
 
        ;; (glitch-white           "#c0caf5")
        (glitch-white "#dce1f9")
-       (glitch-white-fg "#dce1f9")
+       ;; (glitch-white-fg "#dce1f9")
+       (glitch-white-fg "#BBC3D4")
        (glitch-white-bg-hl     "#bb9af7")
        ;; (glitch-white-fg        "#c0caf5")
        (glitch-white-fg-hl     "#bb9af7")
@@ -92,7 +91,8 @@
        (glitch-yellow-bg       "#37363f")
        ;; (glitch-yellow-bg-hl    "#e0af68")
        (glitch-yellow-bg-hl "#464a53")
-       (glitch-yellow-fg       "#e0af68")
+       ;; (glitch-yellow-fg       "#e0af68")
+       (glitch-yellow-fg       "#EBCB8B")
        (glitch-yellow-fg-hl    "#2a1d09")
 
        ;; == Diagnostics ==
@@ -185,7 +185,7 @@
    `(menu                          ((,class (:background ,bg :foreground ,muted-fg))))
    `(minibuffer-prompt             ((,class (:foreground ,glitch-blue-fg))))
    `(mode-line                     ((,class (:inherit menu :background ,bg :foreground ,muted-fg))))
-   `(mode-line-active              ((,class (:inherit highlight :background ,test-dark-bg :foreground "#a9b1d6"))))
+   `(mode-line-active              ((,class (:inherit highlight :foreground "#a9b1d6"))))
    `(mode-line-buffer-id           ((,class (:weight normal))))
    `(mode-line-buffer-id-inactive  ((,class (:inherit mode-line-buffer-id))))
    `(mode-line-emphasis            ((,class (:weight bold))))
@@ -212,7 +212,7 @@
    `(underline                     ((,class (:underline t))))
    `(variable-pitch                ((,class (:family "sans serif"))))
    `(variable-pitch-text           ((,class (:family "sans serif"))))
-   `(vertical-border ((,class (:foreground ,dark-bg :background ,bg))))
+   `(vertical-border ((,class (:foreground ,bg))));foreground ,dark-bg :background ,bg))))
    ;; `(vertical-border ((,class (:inherit fill-column-indicator))))
    ;; `(vertical-border               ((,class (:inherit border))))
    `(warning                       ((,class (:foreground ,warning-fg))))
@@ -354,14 +354,12 @@
 
    `(font-lock-builtin-face ((,class (:foreground ,glitch-blue-fg))))
    `(font-lock-comment-face ((,class (:foreground "#5c6184"))))
-   `(ext/my-face ((,class (:foreground "#7b7fa3"))))
-   ;; `(font-lock-constant-face ((,class (:foreground ,safe))))
-   `(font-lock-constant-face ((,class (:inherit ext/my-face))))   
+   `(font-lock-constant-face ((,class (:foreground ,safe))))
    `(font-lock-doc-face ((,class (:inherit font-lock-comment-face))))
    `(font-lock-function-name-face ((,class (:foreground ,glitch-cyan-fg))))
    `(font-lock-function-call-face ((,class (:inherit font-lock-function-name-face))))
    ;; `(font-lock-keyword-face ((,class (:foreground ,glitch-magenta-fg))))
-   `(font-lock-keyword-face ((,class (:inherit ext/my-face))))   
+   `(font-lock-keyword-face ((,class (:foreground ,safe))))   
    `(font-lock-negation-char-face ((,class (:foreground ,glitch-red-fg))))
    `(font-lock-number-face ((,class (:foreground ,safe))))
    `(font-lock-operator-face ((,class (:inherit font-lock-function-call-face))))
