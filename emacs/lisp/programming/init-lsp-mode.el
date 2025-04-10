@@ -3,6 +3,7 @@
 ;;; Code:
 
 (use-package lsp-mode
+  :defer t
   :init
   (setq lsp-keymap-prefix "C-j ;")
   :config

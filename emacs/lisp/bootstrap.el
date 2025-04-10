@@ -38,7 +38,7 @@
 ;; blocks.
 (setq straight-use-package-by-default 't)
 
-;; Garbage collection "advice" to prefer gcs when idle.
+;; Garbage collection advice to prefer gcs when idle.
 (use-package gcmh
   :init
   (gcmh-mode 1))

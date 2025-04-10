@@ -1,9 +1,3 @@
-# TODO: Move configuration for interactive sessions into .bash_profile
-export USEREXT_DEV_ROOT=${_USEREXT_DEV_ROOT:-$HOME/dev}
-cdev() {
-    cd "$USEREXT_DEV_ROOT" "$@" || return 1
-}
-
 is_os() { [ "$(uname -s | tr '[:upper:]' '[:lower:]')" = "$1" ] ; }
 is_macos() { is_os "darwin" ; }
 is_linux() { is_os "linux" ; }
@@ -16,7 +10,6 @@ shopt -s histappend
 export HISTSIZE=50000
 alias l="ls -lA --color=always"
 alias r='source $HOME/.bashrc'
-# export TERM=xterm-256color
 export COLORTERM="truecolor"
 
 # Package Management -----------------------------------------------------------
@@ -39,30 +32,11 @@ init_homebrew
 # Editor -----------------------------------------------------------------------
 
 if command -v emacs &>/dev/null; then
-    export EDITOR="emacsclient -nw" && export VISUAL="emacsclient -nw"
+    export EDITOR="emacs" && export VISUAL="emacs"
 elif command -v vim &>/dev/null; then
     export EDITOR="vim" && export VISUAL="vim"
 fi
-
 alias e='$EDITOR'
-
-# Git --------------------------------------------------------------------------
-
-alias ga="git add"
-alias gb="git branch"
-alias gc="git commit"
-alias gcm="git commit -m"
-alias gca="git commit --amend"
-alias gd="git diff"
-alias gdc="git diff --cached"
-alias gl="git log"
-gs() {
-    # if pgrep -falq "emacs --daemon"; then
-    #     emacsclient -nw --eval "(progn (magit-status))"
-    # else
-    git status
-    # fi
-}
 
 # Tmux -------------------------------------------------------------------------
 
@@ -172,31 +146,19 @@ _prompt() {
 }
 PROMPT_COMMAND=_prompt
 
-# = Rust 
+# Misc -------------------------------------------------------------------------
+
+# Rust
 CARGO_DIR="$HOME/.cargo"
 CARGO_BIN="$CARGO_DIR/bin"
 if [ -d "$CARGO_BIN" ]; then
     PATH=$PATH:"$CARGO_BIN"
 fi
 
-# Misc
-
-# "tail-head"
-th() {
-    if [ -z "$1" ]; then
-        echo "Tail the newest file in a directory."
-        echo "usage: th <directory> <tail_args>.."
-        return 1
-    fi
-    local directory="$1"
-    local rest="${@:2}" # FIXME: Check SC2124 warning
-    tail $rest $directory/$(ls -1t $directory | head -1)
-}
-
+# AWS CLI completions
 if which aws_completer &>/dev/null; then
     complete -C "$(which aws_completer)" aws
 fi
-# complete -C '/opt/homebrew/bin/aw' aws
 
 # Local Configuration ----------------------------------------------------------
 # Consider everything in $HOME/.config/bash as additional shell configuration.
