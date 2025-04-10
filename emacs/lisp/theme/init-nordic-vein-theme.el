@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package nordic-vein-theme
-  :straight (:type git :repo "https://github.com/smtracer/nordic-vein")
+  :straight (:type git :repo "https://github.com/smtracer/nordic-vein-theme")
   :init
   (load-theme 'nordic-vein t))
 

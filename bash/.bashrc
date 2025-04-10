@@ -208,4 +208,3 @@ for local_config in "$HOME/.config/bash/"*; do
 	. "$local_config"
     fi
 done
-
