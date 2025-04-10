@@ -2,6 +2,17 @@
 ;;; Commentary:
 ;;; Code:
 
+(define-prefix-command 'user-overlay-prefix-map)
+(defvar user-overlay-mode-map (make-sparse-keymap)
+  "Keymap for 'user-overlay-mode'.")
+(define-key user-overlay-mode-map (kbd "C-j") 'user-overlay-prefix-map)
+
+(define-minor-mode user-overlay-mode
+  "."
+  :init-value t ; enabled by default
+  :global t
+  :keymap user-overlay-mode-map)
+
 ;; Install 'straight.el', an alternative package manager. Packages are installed
 ;; locally as git repos and built from the local repo.
 (defvar bootstrap-version)
@@ -31,6 +42,12 @@
 (use-package gcmh
   :init
   (gcmh-mode 1))
+
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (provide 'bootstrap)
 ;;; bootstrap.el ends here

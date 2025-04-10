@@ -1,18 +1,17 @@
-;;; init.el --- User configuration entrypoint.
+;;; -*- flymake-mode: nil -*-
+;;; init.el --- Emacs user configuration.
 ;;; Commentary:
 ;;; Code:
 
-(add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
-
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'bootstrap)
-
-(require 'init-overlay)
-(require 'init-theme)
-(require 'init-emacs)
+;; -----------------
+(require 'init-editing)
+(require 'init-minibuffer)
+(require 'init-misc)
 (require 'init-org)
-(require 'init-text-editing)
 (require 'init-programming)
-(require 'init-completion)
+(require 'init-theme)
 
 (provide 'init)
 ;;; init.el ends here

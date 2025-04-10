@@ -1,4 +1,4 @@
-;;; early-init.el --- User pre-configuration entrypoint.
+;;; early-init.el --- Emacs user pre-configuration.
 ;;; Commentary:
 ;;
 ;; From the 'Info' page for the init file:
@@ -15,6 +15,7 @@
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
 (setenv "LSP_USE_PLISTS" "true")
 (setq inhibit-splash-screen t        ; Open to a *scratch* buffer instead
+      load-prefer-newer t
       package-enable-at-startup nil) ; Disable 'package.el', Emacs' default
                                      ; packaging system.
 

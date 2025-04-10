@@ -2814,6 +2814,8 @@
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
+			<key>Minimum Contrast</key>
+			<real>0.044757593457943924</real>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
@@ -2950,9 +2952,9 @@
 	<key>TabsHaveCloseButton</key>
 	<false/>
 	<key>TerminalMargin</key>
-	<integer>30</integer>
+	<integer>15</integer>
 	<key>TerminalVMargin</key>
-	<integer>30</integer>
+	<integer>15</integer>
 	<key>UseBorder</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>

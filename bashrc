@@ -193,6 +193,11 @@ th() {
     tail $rest $directory/$(ls -1t $directory | head -1)
 }
 
+if which aws_completer &>/dev/null; then
+    complete -C "$(which aws_completer)" aws
+fi
+# complete -C '/opt/homebrew/bin/aw' aws
+
 # Local Configuration ----------------------------------------------------------
 # Consider everything in $HOME/.config/bash as additional shell configuration.
 # Source these last so that local configuration takes precedence.
@@ -203,3 +208,4 @@ for local_config in "$HOME/.config/bash/"*; do
 	. "$local_config"
     fi
 done
+
