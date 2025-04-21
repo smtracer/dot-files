@@ -4,8 +4,9 @@
 
 (use-package magit
   :commands magit
-  :config
+  ;; :init
   ;; Save open project files without a prompt when opening magit.
+  :config
   (setq magit-save-repository-buffers 'dontask))
 
 (provide 'init-magit)

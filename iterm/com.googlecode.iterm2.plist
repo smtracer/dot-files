@@ -2954,7 +2954,7 @@
 	<key>TerminalMargin</key>
 	<integer>15</integer>
 	<key>TerminalVMargin</key>
-	<integer>15</integer>
+	<integer>5</integer>
 	<key>UseBorder</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>
