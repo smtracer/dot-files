@@ -17,9 +17,15 @@
 
 (defun vl/isearch-keep-point-at-start ()
   "Move point to the beginning of the search string after isearch."
-  (when isearch-forward
+  (when (and isearch-forward (boundp 'isearch-other-end) isearch-other-end)
     (goto-char isearch-other-end)))
-(add-hook 'isearch-update-post-hook 'vl/isearch-keep-point-at-start)
+(add-hook 'isearch-mode-end-hook 'vl/isearch-keep-point-at-start)
+
+;; Copy head of emacs kill-ring to the system clipboard via ANSI OSC 52 escape
+;; sequences.
+(use-package clipetty
+  :ensure t
+  :hook (after-init . global-clipetty-mode))
 
 (provide 'init-builtin-editing)
 ;;; init-builtin-editing.el ends here
