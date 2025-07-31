@@ -113,9 +113,6 @@
 (use-package doom-modeline
   :hook ((emacs-startup-hook . doom-modeline-mode)))
 
-;; (use-package nerd-icons
-;;   :defer t)
-
 ;; PROGRAMMING
 
 (use-package magit
@@ -139,6 +136,15 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-programming)
 (require 'mortar)
+
+(use-package org
+  :straight (:type built-in)
+  :bind
+  (:map user-overlay-map
+        ("o a" . org-agenda)
+        ("o c" . org-capture))
+  :config
+  (setq org-hide-emphasis-markers t))
 
 ;; Load extended local initialization files.
 (let ((local-config-dir "~/.config/emacs/"))

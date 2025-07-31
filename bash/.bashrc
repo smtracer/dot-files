@@ -7,7 +7,7 @@ if is_macos; then
 fi
 
 shopt -s histappend
-export HISTSIZE=50000
+export HISTSIZE=10000
 alias l="ls -lA --color=always"
 alias r='source $HOME/.bashrc'
 export COLORTERM="truecolor"
@@ -16,15 +16,15 @@ export COLORTERM="truecolor"
 
 init_homebrew() {
     if is_macos; then
-	brew_prefix="/opt/homebrew"
+	    brew_prefix="/opt/homebrew"
     elif is_linux; then
-	brew_prefix="/home/linuxbrew/.linuxbrew"
+	    brew_prefix="/home/linuxbrew/.linuxbrew"
     else
-	return 1
+	    return 1
     fi
 
     if [ -x "$brew_prefix/bin/brew" ]; then
-	eval "$("$brew_prefix"/bin/brew shellenv)"
+	    eval "$("$brew_prefix"/bin/brew shellenv)"
     fi
 }
 init_homebrew
@@ -37,6 +37,7 @@ elif command -v vim &>/dev/null; then
     export EDITOR="vim" && export VISUAL="vim"
 fi
 alias e='$EDITOR'
+alias ec="emacsclient -nw" # TODO: Update EDITOR if I like this
 
 # Tmux -------------------------------------------------------------------------
 
