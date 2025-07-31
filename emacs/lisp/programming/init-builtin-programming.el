@@ -2,14 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(add-hook 'conf-mode-hook 'display-line-numbers-mode)
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
-
 (use-package flymake
   :straight (:type built-in)
   :bind
-  (:map user-overlay-prefix-map
+  (:map user-overlay-map
         ("e n" . flymake-goto-next-error)
         ("e p" . flymake-goto-prev-error)))
 

@@ -2,11 +2,21 @@
 ;;; Commentary:
 ;;; Code:
 
+(add-hook 'conf-mode-hook 'display-line-numbers-mode)
+(add-hook 'conf-mode-hook 'display-fill-column-indicator-mode )
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode )
+
+(use-package flymake
+  :straight (:type built-in)
+  :bind
+  (:map user-overlay-map
+        ("e n" . flymake-goto-next-error)
+        ("e p" . flymake-goto-prev-error)))
+
 (add-to-list 'load-path (expand-file-name "lisp/programming" user-emacs-directory))
 (require 'init-builtin-programming)
-(require 'init-hl-todo)
 (require 'init-lsp-mode)
-(require 'init-magit)
 ;; Language setup
 (require 'init-lang-bash)
 (require 'init-lang-c)

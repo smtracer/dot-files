@@ -1,8 +1,7 @@
 #!/bin/bash
 #
-# This script initializes the environment defined by & expected by the dotfiles
-# in this repository. This includes copying dotfiles to their expected
-# locations.
+# This script initializes the environment defined & expected by the dotfiles in
+# this repository. This includes copying dotfiles to their expected locations.
 
 usage() {
     echo "usage: setup.sh [overwrite-existing-files: -f] [help: -h]"
