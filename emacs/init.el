@@ -1,5 +1,24 @@
-;;; init.el --- Emacs user configuration.
+;;; init.el --- Emacs configuration.
 ;;; Commentary:
+;;
+;; This init file does two things:
+;; - Initialize a bare minimum starting point for further configuration
+;; - Load additional configuration
+;;
+;; The bare minimum starting point is:
+;; 1. A Lisp package manager integrated with 'use-package.el' ('straight.el')
+;; 2. A globally available, user-level keymap ('user-overlay-map')
+;;
+;; The additional configuration files located in 'lisp/' should be
+;; self-explanatory in nature (e.g. 'init-text-editing.el' configures
+;; functionality, and/or loads additional packages, that are related to text
+;; editing).
+;;
+;; In addition to the well-defined configuration that's specified & 'require'd
+;; in this init file, all elisp files in '~/.config/emacs' are considered as
+;; machine/user specific config, and are loaded at the end, thus giving them
+;; precedence.
+;;
 ;;; Code:
 
 ;; Bootstrap the 'straight.el' package manager.
@@ -27,126 +46,26 @@
 ;; definitions.
 (setq straight-use-package-by-default 't)
 
-;; Setup a user configuration layer.
-(define-prefix-command 'user-overlay-map)
+;; Setup a user configuration layer, with a globally available prefix "C-j".
 (defvar user-overlay-mode-map (make-sparse-keymap))
 (define-key user-overlay-mode-map (kbd "C-j") 'user-overlay-map)
+(define-prefix-command 'user-overlay-map)
 (define-minor-mode user-overlay-mode
-  "A global configurable user layer that sits on top of builtin settings."
-  :init-value t ; enabled by default
+  "A global, configurable user layer."
+  :init-value t
   :global t
   :keymap user-overlay-mode-map)
 
-(setq-default indent-tabs-mode nil
-              tab-width 4)
-
-(electric-pair-mode 1)
-
-(define-key global-map (kbd "M-;") #'comment-line)
-(define-key global-map (kbd "C-k") #'kill-whole-line)
-
-(use-package avy
-  :bind
-  (:map user-overlay-map
-        ("C-l" . #'avy-goto-line)
-        ("k l" . #'avy-kill-whole-line)
-        ("k r" . #'avy-kill-region)
-        ("C-s" . #'avy-goto-char-timer)))
-
-;; TODO: try corfu
-(use-package company
-  :hook (emacs-startup . global-company-mode)
-  :config
-  (setq company-minimum-prefix-length 1))
-
-;; TODO: Just write these myself
-(use-package crux
-  :bind
-  (:map global-map
-        ("C-o" . crux-smart-open-line)
-        ("C-q" . crux-smart-open-line-above)))
-
-(use-package surround
-  :bind
-  (:map user-overlay-map
-        ("TAB" . surround-kill-inner)
-        ("C-a" . surround-kill-outer)
-        ("C-w" . surround-mark-inner)
-        ("C-r" . surround-change)))
-
-(use-package whitespace-cleanup-mode
-  :hook ((prog-mode . whitespace-cleanup-mode)
-         (org-mode . whitespace-cleanup-mode)))
-
-(use-package vertico
-  :hook
-  (emacs-startup . vertico-mode))
-
-(use-package marginalia
-  :hook
-  (emacs-startup . marginalia-mode))
-
-(setq-default fill-column 80)
-(setq process-query-on-exit-flag nil
-      create-lockfiles nil
-      delete-old-versions t
-      confirm-kill-processes nil
-      compilation-scroll-output 'first-error
-      backup-directory-alist '(("." . "~/.emacs.d/saves")))
-
-(winner-mode 1)
-(define-key user-overlay-map (kbd "C-p") #'winner-undo)
-(define-key user-overlay-map (kbd "C-n") #'winner-redo)
-
-(setq dired-listing-switches "-alh --group-directories-first")
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "p") #'dired-up-directory))
-
-(menu-bar-mode -1)
-(set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
-
-(use-package nordic-vein-theme
-  :straight (:type git :repo "https://github.com/smtracer/nordic-vein-theme")
-  :init
-  (load-theme 'nordic-vein t))
-
-(use-package doom-modeline
-  :hook ((emacs-startup-hook . doom-modeline-mode)))
-
-;; PROGRAMMING
-
-(use-package magit
-  :commands magit
-  :config
-  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
-  (setq magit-save-repository-buffers 'dontask))
-
-(use-package hl-todo
-  :hook
-  ((prog-mode . hl-todo-mode)
-   (conf-mode . hl-todo-mode))
-  :config
-  (setq hl-todo-keyword-faces '(("HACK" . warning)
-                                ("Note" . warning)
-                                ("NOTE" . warning)
-                                ("TODO" . warning)
-                                ("BUG" . error)
-                                ("FIXME" . error))))
-
+;; Add the files in 'lisp/' to the load path & then load specific features.
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(require 'init-emacs-misc)
+(require 'init-minibuffer)
+(require 'init-org)
 (require 'init-programming)
-(require 'mortar)
+(require 'init-text-editing)
+(require 'init-ui)
 
-(use-package org
-  :straight (:type built-in)
-  :bind
-  (:map user-overlay-map
-        ("o a" . org-agenda)
-        ("o c" . org-capture))
-  :config
-  (setq org-hide-emphasis-markers t))
-
-;; Load extended local initialization files.
+;; Load machine/user local elisp config.
 (let ((local-config-dir "~/.config/emacs/"))
   (dolist (local-config-file (directory-files-recursively local-config-dir "\\.el$"))
     (when (file-regular-p local-config-file)
