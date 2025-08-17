@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; TODO: Hook together all of the org-agenda/org-notes/org-capture files along
-;; with org-directory
 (use-package org
   :straight (:type built-in)
   :bind
@@ -11,7 +9,9 @@
         ("o a" . org-agenda)
         ("o c" . org-capture))
   :config
-  (setq org-hide-emphasis-markers t))
+  (setq org-hide-emphasis-markers t
+        org-agenda-files `(,org-directory)
+        org-default-notes-file (concat org-directory "/notes.org")))
 
 (provide 'init-org)
 ;;; init-org.el ends here.

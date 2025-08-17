@@ -3,21 +3,16 @@
 ;;
 ;; This init file does two things:
 ;; - Initialize a bare minimum starting point for further configuration
-;; - Load additional configuration
+;; - Load additional config
 ;;
 ;; The bare minimum starting point is:
 ;; 1. A Lisp package manager integrated with 'use-package.el' ('straight.el')
-;; 2. A globally available, user-level keymap ('user-overlay-map')
+;; 2. A global minor mode for user configuration ('user-overlay-mode'), with
+;;    a prefix key ('user-overlay-map').
 ;;
-;; The additional configuration files located in 'lisp/' should be
-;; self-explanatory in nature (e.g. 'init-text-editing.el' configures
-;; functionality, and/or loads additional packages, that are related to text
-;; editing).
-;;
-;; In addition to the well-defined configuration that's specified & 'require'd
-;; in this init file, all elisp files in '~/.config/emacs' are considered as
-;; machine/user specific config, and are loaded at the end, thus giving them
-;; precedence.
+;; The bulk of the config is roughly grouped by functionality in 'lisp/'.
+;; Additionally, elisp files in '~/.config/emacs' are considered as user
+;; specific config, and are loaded last to allow local overrides.
 ;;
 ;;; Code:
 
@@ -55,6 +50,8 @@
   :init-value t
   :global t
   :keymap user-overlay-mode-map)
+(define-prefix-command 'user-overlay-map/project)
+(define-key user-overlay-map (kbd "p") user-overlay-map/project)
 
 ;; Add the files in 'lisp/' to the load path & then load specific features.
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
@@ -73,3 +70,15 @@
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(font-lock-variable-name-face ((t (:inherit ansi-color-blue :foreground "#7aa2f7")))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

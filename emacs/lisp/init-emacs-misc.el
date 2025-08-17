@@ -1,4 +1,4 @@
-;;; init-emacs-misc --- Lightly configured builtins that don't warrant their own
+;;; init-emacs-misc --- Things that don't warrant their own files.
 ;;; files.
 ;;; Commentary:
 ;;; Code:
@@ -17,6 +17,22 @@
 (with-eval-after-load 'dired
   (setq dired-listing-switches "-alh --group-directories-first")
   (define-key dired-mode-map (kbd "p") #'dired-up-directory))
+
+(define-key user-overlay-map (kbd "C-k") #'kill-current-buffer)
+
+;; => Third-party packages
+
+(use-package consult
+  :bind
+  (:map global-map
+        ("C-x b" . consult-buffer)
+        ("C-x p b" . consult-project-buffer)))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (provide 'init-emacs-misc)
 ;;; init-emacs-misc.el ends here.

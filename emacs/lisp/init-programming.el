@@ -25,6 +25,8 @@
 
 (use-package flymake
   :straight (:type built-in)
+  :config
+  (setq flymake-margin-indicator-position nil)
   :bind
   (:map user-overlay-map
         ("e n" . flymake-goto-next-error)
@@ -69,6 +71,19 @@
 
 ;; => Third-party packages
 
+(use-package diff-hl
+  :init
+  (global-diff-hl-mode 1)
+  (diff-hl-flydiff-mode 1)
+  :config
+  (setq diff-hl-show-staged-changes nil)
+  :bind
+  (:map user-overlay-map
+        ("v a" . diff-hl-stage-current-hunk)
+        ("v k" . diff-hl-revert-hunk)
+        ("v n" . diff-hl-next-hunk)
+        ("v p" . diff-hl-previous-hunk)))
+
 (use-package hl-todo
   :hook
   ((prog-mode . hl-todo-mode)
@@ -108,7 +123,24 @@
   :commands magit
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
-  (setq magit-save-repository-buffers 'dontask))
+  (setq magit-save-repository-buffers 'dontask)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
+(use-package treemacs
+  :config
+  (treemacs-project-follow-mode 1)
+  :bind
+  (:map user-overlay-map/project
+        ("t" . treemacs)))
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t)
+
+(use-package treemacs-nerd-icons
+  :after (treemacs)
+  :config
+  (treemacs-load-theme "nerd-icons"))
 
 ;; => Additional modules
 

@@ -4,6 +4,16 @@ is_linux() { is_os "linux" ; }
 
 if is_macos; then
     export BASH_SILENCE_DEPRECATION_WARNING=1
+    # Replace mac's bsd utils with gnu
+    brew_path="$(brew --prefix)" # TODO: This probably doesn't handle no brew well
+    gnu_binpath_suffix="libexec/gnubin"
+    gnutils=("coreutils" "grep" "findutils")
+    for gnutil in "${gnutils[@]}"; do
+        full_gnu_binpath="${brew_path}/opt/${gnutil}/${gnu_binpath_suffix}"
+        if [ -d "$full_gnu_binpath" ]; then
+            export PATH="$full_gnu_binpath":$PATH
+        fi
+    done
 fi
 
 shopt -s histappend
@@ -46,53 +56,43 @@ alias tmk="tmux kill-session -t"
 alias tml="tmux list-sessions"
 alias tmn="tmux new-session -As"
 
-# Transient Environment --------------------------------------------------------
-# Support for persistent, on-the-fly modifications to the shell environment.
+# => fzf
 
-TRANSIENT_ENVIRONMENT="${TRANSIENT_ENVIRONMENT:=$HOME/.bash_transient}"
-if [ ! -f "$TRANSIENT_ENVIRONMENT" ]; then
-    touch "$TRANSIENT_ENVIRONMENT"
-fi
-. "$TRANSIENT_ENVIRONMENT"
+configure_fzf() {
 
-# Create an alias in the transient environment.
-# (transient-environment-create)
-#
-# $1: Name of the alias
-# $2: Value of the alias
-tec() {
-    if [ -z "$1" ] || [ -z "$2" ]; then
-	echo "usage: tec <alias name> <alias value>"
-	return 1
-    fi
+    ! type fzf &>/dev/null && echo "[dotfiles] 'fzf' not found." && return
 
-    echo "alias $1=\"$2\"" >> "$TRANSIENT_ENVIRONMENT"
-    . "$TRANSIENT_ENVIRONMENT"
+    # TODO: Make the theme if it ends up mattering
+    export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+  --style="full"
+  --color=border:#272b35,bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88
+  --color=fg:#D8DEE9,header:#616E88,info:#81A1C1,pointer:#81A1C1,marker:#81A1C1
+  --color=fg+:#D8DEE9,prompt:#81A1C1,hl+:#81A1C1
+  --border="rounded"
+  --scrollbar="│"'
+    export FZF_DEFAULT_COMMAND="find . -type f ! -path '*/.*' ! -name '.*'"
+    
+    fe() {
+        fzf --multi --bind 'enter:become(emacs {+})'
+    }
+
+    fg() {
+        local grep_cmd='grep --exclude ".*" --exclude-dir ".*" -inrsI'
+        local initial_query="${*:-}"
+        fzf --disabled \
+            --query "$initial_query" \
+            --bind "start:reload:$grep_cmd {q}" \
+            --bind "change:reload:sleep 0.1; $grep_cmd {q} || true" \
+            --bind "alt-enter:unbind(change,alt-enter)+change-prompt(2. fzf> )+enable-search+clear-query" \
+            --prompt "1. grep> " \
+            --delimiter : \
+            --preview 'tail -n +{2} {1}' \
+            --preview-window 'right' \
+            --bind 'enter:become(emacs +{2} {1})'
+    }
 }
 
-# Create a transient alias to `cd` into $pwd
-# (transient-environment-directory)
-#
-# $1: Name of the alias
-ted() {
-    if [ -z "$1" ]; then
-	echo "usage: ted <alias name>"
-	return 1
-    fi
-
-    tec "$1" "cd $(pwd)"
-    . "$TRANSIENT_ENVIRONMENT"
-}
-
-# Edit transient environment configuration
-tee() {
-    e "$TRANSIENT_ENVIRONMENT"
-}
-
-# List transient environment configuration
-tel() {
-    cat "$TRANSIENT_ENVIRONMENT"
-}
+configure_fzf
 
 # Prompt -----------------------------------------------------------------------
 
