@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;
 ;; This init file does two things:
-;; - Initialize a bare minimum starting point for further configuration
+;; - Setup a minimal, common starting point for further configuration.
 ;; - Load additional config
 ;;
 ;; The bare minimum starting point is:
@@ -53,14 +53,20 @@
 (define-prefix-command 'user-overlay-map/project)
 (define-key user-overlay-map (kbd "p") user-overlay-map/project)
 
+;; "Garbage Collector Magic Hack" - a global minor mode that adjusts
+;; 'gc-cons-threshold' to execute garbage collection when idle.
+(use-package gcmh
+  :init
+  (gcmh-mode 1))
+
 ;; Add the files in 'lisp/' to the load path & then load specific features.
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(require 'init-ui)
 (require 'init-emacs-misc)
 (require 'init-minibuffer)
 (require 'init-org)
 (require 'init-programming)
 (require 'init-text-editing)
-(require 'init-ui)
 
 ;; Load machine/user local elisp config.
 (let ((local-config-dir "~/.config/emacs/"))

@@ -4,16 +4,6 @@ is_linux() { is_os "linux" ; }
 
 if is_macos; then
     export BASH_SILENCE_DEPRECATION_WARNING=1
-    # Replace mac's bsd utils with gnu
-    brew_path="$(brew --prefix)" # TODO: This probably doesn't handle no brew well
-    gnu_binpath_suffix="libexec/gnubin"
-    gnutils=("coreutils" "grep" "findutils")
-    for gnutil in "${gnutils[@]}"; do
-        full_gnu_binpath="${brew_path}/opt/${gnutil}/${gnu_binpath_suffix}"
-        if [ -d "$full_gnu_binpath" ]; then
-            export PATH="$full_gnu_binpath":$PATH
-        fi
-    done
 fi
 
 shopt -s histappend
@@ -34,7 +24,20 @@ init_homebrew() {
     fi
 
     if [ -x "$brew_prefix/bin/brew" ]; then
-	    eval "$("$brew_prefix"/bin/brew shellenv)"
+	    eval "$("$brew_prefix"/bin/brew shellenv)"        
+    fi
+
+    if is_macos; then
+        # Replace mac's bsd utils with gnu 
+        brew_path="$(brew --prefix)" # TODO: This probably doesn't handle no brew well
+        gnu_binpath_suffix="libexec/gnubin"
+        gnutils=("coreutils" "grep" "findutils")
+        for gnutil in "${gnutils[@]}"; do
+            full_gnu_binpath="${brew_path}/opt/${gnutil}/${gnu_binpath_suffix}"
+            if [ -d "$full_gnu_binpath" ]; then
+                export PATH="$full_gnu_binpath":$PATH
+            fi
+        done        
     fi
 }
 init_homebrew

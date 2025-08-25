@@ -19,8 +19,18 @@
   (define-key dired-mode-map (kbd "p") #'dired-up-directory))
 
 (define-key user-overlay-map (kbd "C-k") #'kill-current-buffer)
+(define-key user-overlay-map (kbd ";") #'point-to-register)
+(define-key user-overlay-map (kbd "'") #'jump-to-register)
 
 ;; => Third-party packages
+
+(use-package ace-window
+  :config
+  ;; Treemacs should not be select-able as a regular buffer
+  (add-to-list 'aw-ignored-buffers "^\\*Treemacs\\*")
+  :bind
+  (:map global-map
+        ("C-x o" . ace-window)))
 
 (use-package consult
   :bind
@@ -33,6 +43,17 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package perspective
+  :custom
+  (persp-mode-prefix-key (kbd "C-j C-j"))
+  :init
+  (persp-mode)
+  (with-eval-after-load 'consult
+    (consult-customize consult--source-buffer :hidden t :default nil)
+    (add-to-list 'consult-buffer-sources persp-consult-source))
+  (customize-set-variable 'even-window-sizes nil))     ; avoid resizing
+
 
 (provide 'init-emacs-misc)
 ;;; init-emacs-misc.el ends here.
