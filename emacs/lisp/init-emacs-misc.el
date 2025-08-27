@@ -7,6 +7,7 @@
       confirm-kill-processes nil
       create-lockfiles nil
       delete-old-versions t
+      find-file-visit-truename t ; Follow symlinks - required for treemacs project follow to work with symlinks
       process-query-on-exit-flag nil)
 
 ;; Provides undo/redo for the window configuration.

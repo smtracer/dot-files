@@ -162,6 +162,7 @@
 (use-package treemacs
   :config
   (treemacs-project-follow-mode 1)
+  (treemacs-git-commit-diff-mode 1)
   :bind
   (:map user-overlay-map/project
         ("t" . treemacs)))
