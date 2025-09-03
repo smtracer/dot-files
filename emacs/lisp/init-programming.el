@@ -25,6 +25,12 @@
 
 (define-key global-map (kbd "M-;") #'comment-line)
 
+(use-package eat
+  :bind
+  (:map user-overlay-map
+        ("4 p s" . eat-project-other-window)
+        ("p s" . eat-project)))
+
 (use-package flymake
   :straight (:type built-in)
   :config
@@ -166,6 +172,10 @@
   :bind
   (:map user-overlay-map/project
         ("t" . treemacs)))
+
+(use-package treemacs-perspective
+  :after treemacs perspective
+  :config (treemacs-set-scope-type 'Perspectives))
 
 (use-package treemacs-magit
   :after (treemacs magit)

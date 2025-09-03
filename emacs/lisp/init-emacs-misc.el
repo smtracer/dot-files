@@ -23,6 +23,14 @@
 (define-key user-overlay-map (kbd ";") #'point-to-register)
 (define-key user-overlay-map (kbd "'") #'jump-to-register)
 
+
+(add-hook 'isearch-mode-end-hook (lambda ()
+                                   (when (and isearch-forward
+                                              (number-or-marker-p isearch-other-end)
+                                              ;; (not mark-active)
+                                              (not isearch-mode-end-hook-quit))
+                                     (goto-char isearch-other-end))))
+
 ;; => Third-party packages
 
 (use-package ace-window
